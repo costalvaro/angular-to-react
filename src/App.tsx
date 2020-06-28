@@ -3,9 +3,14 @@ import logo from './logo.svg';
 import './App.css';
 import getAngularStory from './angular-to-react';
 import { NgButton } from './Button';
+import { NgButton2 } from './Button2';
+import { NgAggregate } from './Aggregate';
 
 function App() {
-  let Button = getAngularStory(NgButton);
+  let Button = getAngularStory(NgButton, 'app-root');
+  let Button2 = getAngularStory(NgButton2, 'button2');
+  let Button3 = getAngularStory(NgButton, 'app-root');
+  let Aggregate = getAngularStory(NgAggregate, 'app-aggregate');
   return (
     <div className="App">
       <header className="App-header">
@@ -23,6 +28,9 @@ function App() {
         </a>
         <p>test</p>
         <Button />
+        <Button2 />
+        <Button3 />
+        <Aggregate />
       </header>
     </div>
   );

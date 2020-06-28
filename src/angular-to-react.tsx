@@ -2,30 +2,30 @@
 import 'reflect-metadata';
 import 'zone.js/dist/zone';
 import 'zone.js/dist/zone-error';
-import { NgModule, NgModuleRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, NgModuleRef, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import React from 'react';
-
-const defaultPassProps = (props: any) => props;
+import { NgButton2 } from './Button2';
 
 export const SELECTOR = 'app-root';
 
 const bootstrapAngularApp = (
   node: HTMLElement,
-  AppComponentInstance: any
+  AppComponentInstance: any,
+  selector: string,
 ): Promise<NgModuleRef<any>> => {
-  node.appendChild(document.createElement(SELECTOR));
+  node.appendChild(document.createElement(selector));
   const AppModule = NgModule({
-    declarations: [AppComponentInstance],
+    declarations: [AppComponentInstance, NgButton2],
     imports: [BrowserModule],
     bootstrap: [AppComponentInstance],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   })(class {});
   return platformBrowserDynamic().bootstrapModule(AppModule);
 };
 
-export default (Component: any, { passProps = defaultPassProps } = {}) => {
+export default (Component: any, selector: string = SELECTOR) => {
   console.log('debugging... trying to display: ', Component);
   return (props: any) => {
     console.log('debugging... Executing function with props', props);
@@ -35,7 +35,7 @@ export default (Component: any, { passProps = defaultPassProps } = {}) => {
       console.log('debugging... Executing useEffect with el', el);
       let module: any;
       // eslint-disable-next-line no-return-assign
-      bootstrapAngularApp(el.current, Component).then((m) => (module = m));
+      bootstrapAngularApp(el.current, Component, selector).then((m) => (module = m));
       // eslint-disable-next-line consistent-return
       return () => {
         while (!module) {
@@ -47,6 +47,6 @@ export default (Component: any, { passProps = defaultPassProps } = {}) => {
       };
     });
     console.log('debugging... createElement', el);
-    return React.createElement('div', null, React.createElement('div', { ref: el }));
+    return React.createElement('div', { ref: el, className: 'angular-wrapper' });
   };
 };
