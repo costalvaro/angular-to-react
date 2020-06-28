@@ -1,8 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import getAngularStory from './angular-to-react';
+import { NgButton } from './Button';
 
 function App() {
+  let Button = getAngularStory(NgButton);
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +21,8 @@ function App() {
         >
           Learn React
         </a>
+        <p>test</p>
+        <Button />
       </header>
     </div>
   );
