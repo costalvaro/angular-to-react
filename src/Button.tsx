@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { SELECTOR } from './angular-to-react';
 
 @Component({
-  selector: SELECTOR,
+  selector: 'button1',
   template: `
     <button (click)="onChange($event)">
        Hello World
